@@ -215,3 +215,106 @@ const processFrame = () => {
 
   requestAnimationFrame(processFrame);
 };
+
+const initHandTracking = async () => {
+  setStatus("Loading tracker");
+  const vision = await FilesetResolver.forVisionTasks(
+    "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22-rc.20250304/wasm",
+  );
+
+  state.landmarker = await HandLandmarker.createFromOptions(vision, {
+    baseOptions: {
+      modelAssetPath:
+        "https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task",
+      delegate: "GPU",
+    },
+    runningMode: "VIDEO",
+    numHands: 1,
+    minHandDetectionConfidence: 0.68,
+    minHandPresenceConfidence: 0.68,
+    minTrackingConfidence: 0.62,
+  });
+};
+
+const startCamera = async () => {
+  try {
+    startBtn.disabled = true;
+    setStatus("Requesting camera");
+    await initHandTracking();
+
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        width: { ideal: 1280 },
+        height: { ideal: 720 },
+        frameRate: { ideal: 60, min: 30 },
+        facingMode: "user",
+      },
+      audio: false,
+    });
+
+    video.srcObject = stream;
+    await video.play();
+    resizeCanvases();
+    state.running = true;
+    startScreen.classList.add("hidden");
+    setStatus("Camera active", true);
+    processFrame();
+  } catch (error) {
+    console.error(error);
+    startBtn.disabled = false;
+    setStatus("Camera blocked");
+    gestureStatus.textContent = "Camera permission needed";
+  }
+};
+
+const setMode = (mode) => {
+  state.mode = mode;
+  penBtn.classList.toggle("active", mode === "pen");
+  eraserBtn.classList.toggle("active", mode === "eraser");
+};
+
+colorButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    state.color = button.dataset.color;
+    colorButtons.forEach((item) => item.classList.remove("active"));
+    button.classList.add("active");
+    setMode("pen");
+  });
+});
+
+brushSize.addEventListener("input", () => {
+  state.size = Number(brushSize.value);
+  sizeDot.style.setProperty("--size", `${state.size}px`);
+});
+
+stabilizer.addEventListener("input", () => {
+  state.smoothing = Number(stabilizer.value) / 100;
+  stabilityReadout.textContent =
+    state.smoothing > 0.66 ? "High" : state.smoothing > 0.34 ? "Medium" : "Low";
+});
+
+penBtn.addEventListener("click", () => setMode("pen"));
+eraserBtn.addEventListener("click", () => setMode("eraser"));
+
+clearBtn.addEventListener("click", () => {
+  drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+});
+
+saveBtn.addEventListener("click", () => {
+  const output = document.createElement("canvas");
+  output.width = drawCanvas.width;
+  output.height = drawCanvas.height;
+  const outputCtx = output.getContext("2d");
+  outputCtx.fillStyle = "#05070b";
+  outputCtx.fillRect(0, 0, output.width, output.height);
+  outputCtx.drawImage(drawCanvas, 0, 0);
+
+  const link = document.createElement("a");
+  link.download = `gesture-drawing-${Date.now()}.png`;
+  link.href = output.toDataURL("image/png");
+  link.click();
+});
+
+window.addEventListener("resize", resizeCanvases);
+startBtn.addEventListener("click", startCamera);
+resizeCanvases();
