@@ -54,6 +54,68 @@
       <div class="quick-hint">
         <strong>Accuracy mode:</strong> adaptive pinch detection, curved strokes, and motion smoothing are active.
       </div>
+
+      <nav class="toolbar" aria-label="Drawing tools">
+        <div class="tool-group" aria-label="Mode">
+          <button class="mode-btn active" id="penBtn" type="button" title="Pen">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="m12 20 9-9-4-4-9 9-2 6 6-2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+              <path d="m15 9 4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </button>
+          <button class="mode-btn" id="eraserBtn" type="button" title="Eraser">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="m7 21-5-5L14 4a3 3 0 0 1 4 0l2 2a3 3 0 0 1 0 4L9 21H7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+              <path d="m12 8 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="tool-group" aria-label="Colors">
+          <button class="color-btn active" data-color="#20f7b2" style="--swatch: #20f7b2" type="button" title="Plasma mint"></button>
+          <button class="color-btn" data-color="#4deaff" style="--swatch: #4deaff" type="button" title="Ion cyan"></button>
+          <button class="color-btn" data-color="#ff4fd8" style="--swatch: #ff4fd8" type="button" title="Neon pink"></button>
+          <button class="color-btn" data-color="#ffdf70" style="--swatch: #ffdf70" type="button" title="Solar amber"></button>
+          <button class="color-btn" data-color="#ffffff" style="--swatch: #ffffff" type="button" title="White"></button>
+        </div>
+
+        <div class="tool-group" aria-label="Brush size">
+          <div id="sizeDot" class="size-dot" style="--size: 14px"></div>
+          <label class="range-wrap">
+            Brush
+            <input id="brushSize" type="range" min="4" max="46" value="14" title="Brush size" />
+          </label>
+        </div>
+
+        <div class="tool-group" aria-label="Stabilizer">
+          <label class="range-wrap">
+            Stabilizer
+            <input id="stabilizer" type="range" min="0" max="100" value="72" title="Stabilizer" />
+          </label>
+        </div>
+
+        <div class="tool-group" aria-label="Precision">
+          <label class="toggle" title="Tighter pinch detection">
+            <input id="precisionMode" type="checkbox" checked />
+            Precision
+          </label>
+        </div>
+
+        <div class="tool-group" aria-label="Actions">
+          <button class="icon-btn" id="clearBtn" type="button" title="Clear">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M3 6h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              <path d="M8 6V4h8v2m-9 0 1 14h8l1-14" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <button class="icon-btn" id="saveBtn" type="button" title="Download">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3v12m0 0 5-5m-5 5-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </button>
+        </div>
+      </nav>
     </main>
     <script type="module" src="app.js"></script>
   </body>
