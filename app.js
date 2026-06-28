@@ -121,3 +121,97 @@ const getPinchState = (landmarks) => {
     strength: clamp(1 - normalized / offThreshold, 0, 1),
   };
 };
+
+const drawStroke = (from, to) => {
+  const jump = Math.hypot(to.x - from.x, to.y - from.y);
+  if (jump > drawCanvas.width * 0.22) return;
+
+  drawCtx.save();
+  drawCtx.lineCap = "round";
+  drawCtx.lineJoin = "round";
+  drawCtx.lineWidth = state.mode === "eraser" ? state.size * 1.85 : state.size;
+  drawCtx.globalCompositeOperation =
+    state.mode === "eraser" ? "destination-out" : "source-over";
+  drawCtx.strokeStyle = state.color;
+  drawCtx.shadowColor = state.mode === "eraser" ? "transparent" : state.color;
+  drawCtx.shadowBlur = state.mode === "eraser" ? 0 : Math.max(4, state.size * 0.7);
+  drawCtx.beginPath();
+  drawCtx.moveTo(from.x, from.y);
+  drawCtx.quadraticCurveTo(from.x, from.y, to.x, to.y);
+  drawCtx.stroke();
+  drawCtx.restore();
+};
+
+const drawGuides = (landmarks, point, pinch) => {
+  guideCtx.clearRect(0, 0, guideCanvas.width, guideCanvas.height);
+  if (!landmarks) return;
+
+  const tip = canvasPoint(landmarks[8]);
+  const thumb = canvasPoint(landmarks[4]);
+  const radius = Math.max(16, state.size * 1.05);
+  const dpr = window.devicePixelRatio || 1;
+
+  guideCtx.save();
+  guideCtx.lineWidth = 2.5 * dpr;
+  guideCtx.strokeStyle = pinch.active ? state.color : "rgba(246,251,255,0.66)";
+  guideCtx.fillStyle = pinch.active ? `${state.color}44` : "rgba(246,251,255,0.12)";
+  guideCtx.shadowColor = pinch.active ? state.color : "rgba(77,234,255,0.48)";
+  guideCtx.shadowBlur = pinch.active ? 24 : 14;
+  guideCtx.beginPath();
+  guideCtx.arc(point.x, point.y, radius, 0, Math.PI * 2);
+  guideCtx.fill();
+  guideCtx.stroke();
+
+  guideCtx.setLineDash([7 * dpr, 8 * dpr]);
+  guideCtx.strokeStyle = pinch.active ? "rgba(32,247,178,0.85)" : "rgba(255,255,255,0.38)";
+  guideCtx.beginPath();
+  guideCtx.moveTo(tip.x, tip.y);
+  guideCtx.lineTo(thumb.x, thumb.y);
+  guideCtx.stroke();
+
+  guideCtx.setLineDash([]);
+  guideCtx.strokeStyle = "rgba(77,234,255,0.22)";
+  guideCtx.beginPath();
+  guideCtx.arc(point.x, point.y, radius + 12 * pinch.strength, 0, Math.PI * 2);
+  guideCtx.stroke();
+  guideCtx.restore();
+};
+
+const processFrame = () => {
+  if (!state.running || !state.landmarker) return;
+
+  if (video.currentTime !== state.lastVideoTime) {
+    state.lastVideoTime = video.currentTime;
+    const result = state.landmarker.detectForVideo(video, performance.now());
+    const landmarks = result.landmarks?.[0];
+
+    if (landmarks) {
+      const pinch = getPinchState(landmarks);
+      const point = smoothPoint(weightedTipPoint(landmarks));
+
+      pinchMeter.style.setProperty("--value", `${Math.round(pinch.strength * 100)}%`);
+      drawGuides(landmarks, point, pinch);
+      gestureStatus.textContent = pinch.active
+        ? state.mode === "eraser"
+          ? "Erasing"
+          : "Drawing"
+        : "Hover";
+
+      if (pinch.active && state.lastDrawPoint) {
+        drawStroke(state.lastDrawPoint, point);
+      }
+
+      state.lastPoint = point;
+      state.lastDrawPoint = pinch.active ? point : null;
+    } else {
+      guideCtx.clearRect(0, 0, guideCanvas.width, guideCanvas.height);
+      pinchMeter.style.setProperty("--value", "0%");
+      gestureStatus.textContent = "Waiting for hand";
+      state.lastPoint = null;
+      state.lastDrawPoint = null;
+      state.pinchActive = false;
+    }
+  }
+
+  requestAnimationFrame(processFrame);
+};
