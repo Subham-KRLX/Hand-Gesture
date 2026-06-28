@@ -2,6 +2,14 @@
 
 A futuristic webcam drawing app that lets you paint in the air with hand gestures. It uses MediaPipe hand tracking in the browser, so the camera feed stays local to the user machine.
 
+## Preview
+
+![Gesture Draw Pro desktop preview](assets/screenshots/desktop-preview.jpg)
+
+<p align="center">
+  <img src="assets/screenshots/mobile-preview.jpg" alt="Gesture Draw Pro mobile preview" width="320" />
+</p>
+
 ## Features
 
 - Draw by pinching your thumb and index finger
@@ -63,6 +71,8 @@ Use a modern Chromium-based browser for the best camera and WebAssembly performa
 
 ```text
 .
+├── assets/
+│   └── screenshots/
 ├── index.html
 ├── styles.css
 ├── app.js
