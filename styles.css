@@ -345,3 +345,48 @@ video {
   outline: 3px solid rgba(77, 234, 255, 0.28);
   outline-offset: 3px;
 }
+
+.range-wrap {
+  display: grid;
+  grid-template-columns: auto 118px;
+  gap: 9px;
+  align-items: center;
+  min-width: 176px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+
+.range-wrap input {
+  width: 118px;
+  accent-color: var(--cyan);
+}
+
+.size-dot {
+  width: var(--size);
+  height: var(--size);
+  min-width: var(--size);
+  border-radius: 50%;
+  background: var(--text);
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.38);
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 12px;
+  border: 1px solid rgba(127, 218, 255, 0.24);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--text);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.toggle input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--green);
+}
