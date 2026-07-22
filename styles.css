@@ -339,6 +339,15 @@ video {
   box-shadow: 0 0 18px rgba(77, 234, 255, 0.18);
 }
 
+.icon-btn:focus-visible,
+.mode-btn:focus-visible,
+.color-btn:focus-visible,
+.start-btn:focus-visible,
+.toggle:focus-within {
+  outline: 3px solid rgba(77, 234, 255, 0.48);
+  outline-offset: 3px;
+}
+
 .mode-btn.active {
   border-color: rgba(32, 247, 178, 0.84);
   background: rgba(32, 247, 178, 0.16);
