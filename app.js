@@ -271,6 +271,8 @@ const setMode = (mode) => {
   state.mode = mode;
   penBtn.classList.toggle("active", mode === "pen");
   eraserBtn.classList.toggle("active", mode === "eraser");
+  penBtn.setAttribute("aria-pressed", String(mode === "pen"));
+  eraserBtn.setAttribute("aria-pressed", String(mode === "eraser"));
 };
 
 colorButtons.forEach((button) => {
