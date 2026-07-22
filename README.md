@@ -100,6 +100,13 @@ Allow camera access when the browser asks for permission.
 - Increase stabilizer for smoother strokes.
 - Turn off precision mode if pinch detection feels too strict.
 
+## Troubleshooting
+
+- If the camera does not start, confirm the browser has camera permission.
+- If the preview is blank, refresh the page after allowing camera access.
+- If tracking feels jumpy, improve lighting and increase the stabilizer value.
+- If drawing starts too easily, keep precision mode enabled.
+
 ## Browser Support
 
 Use a modern Chromium-based browser for the best camera and WebAssembly performance.
