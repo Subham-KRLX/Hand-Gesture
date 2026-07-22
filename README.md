@@ -1,14 +1,27 @@
 # Hand Gesture Drawing App
 
-A futuristic webcam drawing app that lets you paint in the air with hand gestures. It uses MediaPipe hand tracking in the browser, so the camera feed stays local to the user machine.
+![HTML](https://img.shields.io/badge/HTML-5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS-3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![MediaPipe](https://img.shields.io/badge/MediaPipe-Hand_Tracking-00A6FF?style=for-the-badge)
+
+A futuristic webcam drawing app that lets users paint in the air with hand gestures. It tracks the hand directly in the browser, turns a thumb-index pinch into brush input, and keeps the camera feed local to the device.
 
 ## Preview
 
+### Desktop
+
 ![Gesture Draw Pro desktop preview](assets/screenshots/desktop-preview.jpg)
+
+### Mobile
 
 <p align="center">
   <img src="assets/screenshots/mobile-preview.jpg" alt="Gesture Draw Pro mobile preview" width="320" />
 </p>
+
+## Overview
+
+Gesture Draw Pro is built as a browser-based creative tool. The app detects a single hand through the webcam, maps the index finger position to the canvas, and uses a pinch gesture to decide when ink should touch the screen. The interface is designed like a futuristic HUD so the user can see camera status, pinch strength, stabilizer level, and active drawing mode while using the app.
 
 ## Features
 
@@ -23,6 +36,30 @@ A futuristic webcam drawing app that lets you paint in the air with hand gesture
 - Clear canvas action
 - Download drawing as a PNG
 - Responsive HUD-style interface
+
+## Controls
+
+| Control | Purpose |
+| --- | --- |
+| Pinch gesture | Starts drawing or erasing |
+| Open hand | Moves the pointer without drawing |
+| Pen | Draws neon strokes |
+| Eraser | Removes parts of the drawing |
+| Color swatches | Changes brush color |
+| Brush slider | Adjusts stroke thickness |
+| Stabilizer slider | Smooths hand movement |
+| Precision mode | Makes pinch detection tighter |
+| Clear | Resets the canvas |
+| Download | Saves the artwork as an image |
+
+## How It Works
+
+1. The browser opens the webcam after the user gives permission.
+2. MediaPipe detects hand landmarks from the video frame.
+3. The app tracks the index finger as the drawing pointer.
+4. Thumb-to-index distance is normalized by hand size for better accuracy.
+5. Pinch strength controls whether the app draws, erases, or hovers.
+6. Motion smoothing reduces jitter before strokes are rendered on canvas.
 
 ## Tech Stack
 
@@ -66,6 +103,10 @@ Allow camera access when the browser asks for permission.
 ## Browser Support
 
 Use a modern Chromium-based browser for the best camera and WebAssembly performance.
+
+## Screenshots
+
+The screenshots in this README are captured from the app's preview state so the UI, drawing canvas, and gesture HUD are visible without requiring camera permissions.
 
 ## Project Structure
 
