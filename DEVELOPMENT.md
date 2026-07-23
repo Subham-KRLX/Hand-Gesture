@@ -14,3 +14,4 @@ This app is intentionally dependency-light: the UI is plain HTML/CSS and the han
 - Confirm the browser asks for camera permission.
 - Check pen, eraser, clear, color, stabilizer, precision, and download controls.
 - Resize the browser to verify the toolbar stays usable on smaller screens.
+- Open browser devtools and confirm no startup errors appear in the console.
