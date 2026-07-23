@@ -137,3 +137,5 @@ The screenshots in this README are captured from the app's preview state so the 
 ## Privacy
 
 The app runs hand tracking in the browser. It does not upload the webcam feed to a custom backend.
+
+MediaPipe scripts and model files are loaded from public CDNs, but camera frames are processed locally in the browser session.
