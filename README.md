@@ -84,6 +84,13 @@ http://localhost:5173
 
 Allow camera access when the browser asks for permission.
 
+## Requirements
+
+- A webcam
+- A modern desktop or mobile browser
+- Camera permission enabled for the local site
+- An internet connection for loading the MediaPipe runtime
+
 ## How To Use
 
 1. Click **Start camera**.
