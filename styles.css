@@ -474,6 +474,11 @@ video {
   box-shadow: 0 0 28px rgba(77, 234, 255, 0.26);
 }
 
+.start-btn:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
 .hidden {
   display: none;
 }
