@@ -3,6 +3,9 @@ import {
   HandLandmarker,
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22-rc.20250304/vision_bundle.mjs";
 
+const MEDIAPIPE_ASSET_BASE =
+  "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22-rc.20250304";
+
 const video = document.querySelector("#video");
 const drawCanvas = document.querySelector("#drawCanvas");
 const guideCanvas = document.querySelector("#guideCanvas");
@@ -219,7 +222,7 @@ const processFrame = () => {
 const initHandTracking = async () => {
   setStatus("Loading tracker");
   const vision = await FilesetResolver.forVisionTasks(
-    "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22-rc.20250304/wasm",
+    `${MEDIAPIPE_ASSET_BASE}/wasm`,
   );
 
   state.landmarker = await HandLandmarker.createFromOptions(vision, {
