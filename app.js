@@ -5,6 +5,7 @@ import {
 
 const MEDIAPIPE_ASSET_BASE =
   "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22-rc.20250304";
+const EXPORT_BACKGROUND = "#05070b";
 
 const video = document.querySelector("#video");
 const drawCanvas = document.querySelector("#drawCanvas");
@@ -310,7 +311,7 @@ saveBtn.addEventListener("click", () => {
   output.width = drawCanvas.width;
   output.height = drawCanvas.height;
   const outputCtx = output.getContext("2d");
-  outputCtx.fillStyle = "#05070b";
+  outputCtx.fillStyle = EXPORT_BACKGROUND;
   outputCtx.fillRect(0, 0, output.width, output.height);
   outputCtx.drawImage(drawCanvas, 0, 0);
 
