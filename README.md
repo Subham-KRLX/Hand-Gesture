@@ -128,11 +128,14 @@ The screenshots in this README are captured from the app's preview state so the 
 .
 ├── assets/
 │   └── screenshots/
+├── DEVELOPMENT.md
 ├── index.html
 ├── styles.css
 ├── app.js
 └── README.md
 ```
+
+See [DEVELOPMENT.md](DEVELOPMENT.md) for local maintenance notes and manual checks.
 
 ## Privacy
 
