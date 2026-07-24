@@ -118,6 +118,8 @@ Allow camera access when the browser asks for permission.
 
 Use a modern Chromium-based browser for the best camera and WebAssembly performance.
 
+Safari and mobile browsers may require HTTPS or localhost before camera permission is available.
+
 ## Screenshots
 
 The screenshots in this README are captured from the app's preview state so the UI, drawing canvas, and gesture HUD are visible without requiring camera permissions.
